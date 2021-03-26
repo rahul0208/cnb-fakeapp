@@ -1,0 +1,11 @@
+# Buildpack API version
+api = "0.2"
+
+# Buildpack ID and metadata
+[buildpack]
+id = "java-maven"
+version = "0.0.1"
+name = "Java Maven Build Pack"
+
+[[stacks]]
+id = "io.buildpacks.stacks.bionic"

@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+echo "---> Log Formatter build pack"
+
+layersdir=$1
+loglayer="$layersdir"/log
+mkdir -p "$loglayer"
+
+cat >> "${loglayer}/logback.xml" <<EOL
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
+EOL
+
+echo -e 'launch = true' > "$layersdir/log.toml"
+
+envvars="$loglayer"/env.launch
+mkdir -p "$envvars"
+
+echo -n "-Dlogging.config=/layers/logformat/log/logback.xml " >> "${envvars}/JAVA_TOOL_OPTIONS.prepend"
+
+echo "---> Done : Added vars to ${envvars}"

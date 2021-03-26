@@ -1,0 +1,12 @@
+[[build.env]]
+name = "BPE_OVERRIDE_SERVER_PORT"
+value = "8000"
+
+[[build.buildpacks]]
+uri = "java-maven"
+
+[[build.buildpacks]]
+uri = "paketo-buildpacks/environment-variables"
+
+[[build.buildpacks]]
+uri = "log-format"
